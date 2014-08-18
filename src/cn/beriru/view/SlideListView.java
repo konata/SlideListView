@@ -32,7 +32,7 @@ public class SlideListView extends ListView {
 			int y = (int) e.getY();
 			int position = pointToPosition(x, y) - getFirstVisiblePosition();
 			if(position != INVALID_POSITION){
-				mCurrentTag = (Slidable) getChildAt(position).getTag();
+				mCurrentTag = (Slidable) getChildAt(position);
 			}
 		}
 		if(mCurrentTag != null){

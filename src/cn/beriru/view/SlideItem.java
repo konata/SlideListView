@@ -3,6 +3,7 @@ package cn.beriru.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,7 +31,7 @@ public class SlideItem extends LinearLayout implements Slidable {
 
 	private int mLastY;
 
-	private static int sHolderDip = 120; // 120dip 
+	private static int sHolderDip = 70; // 70dp width
 	
 	@SuppressLint("NewApi")
 	public SlideItem(Context context, AttributeSet attrs, int defStyle) {
@@ -47,7 +48,7 @@ public class SlideItem extends LinearLayout implements Slidable {
 		mCtx = getContext();
 		mScroller = new Scroller(mCtx);
 
-		//FIXME 第一个元素使用match_parent让他填满,就不需要第二个元素再去设置padding了
+		// FIXME 第一个元素使用match_parent让他填满,就不需要第二个元素再去设置padding了
 		// mContent = (LinearLayout)findViewById(R.id.content);
 		// mHolder = (LinearLayout)findViewById(R.id.holder);
 		// mContent = getChildAt(0);
@@ -99,6 +100,8 @@ public class SlideItem extends LinearLayout implements Slidable {
 				if(mSlideListener != null){
 					mSlideListener.onSlide(SlideState.BEGIN);
 				}
+				mLastX = x;
+				mLastY = y;
 				break;
 			}
 		case MotionEvent.ACTION_MOVE:{
@@ -108,14 +111,18 @@ public class SlideItem extends LinearLayout implements Slidable {
 					break;
 				}
 				int newScrollX = scrollX + mLastX - x;  // scroll方向是移动的相反方向
+				Log.d("newScrollX", "newScrollX " + newScrollX + " scrollX:" + scrollX + " mLastX:" + mLastX + " x:" + x);
 				if(deltaX != 0){
 					if(newScrollX < 0){
 						newScrollX = 0;
 					}else if(newScrollX > mHolderWidth){
 						newScrollX = mHolderWidth;
 					}
+					Log.d("newScrollX", "" + newScrollX);
 					scrollTo(newScrollX, 0);
 				}
+				mLastX = x;
+				mLastY = y;
 				break;
 			}
 		case MotionEvent.ACTION_UP:

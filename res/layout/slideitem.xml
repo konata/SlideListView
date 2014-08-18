@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.beriru.view.SlideItem xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:minHeight="80dp"
+	>
+    
+    <TextView 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:text="1.对呼的时候是否使用预连接,预连接是否成功 "
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="17sp"
+        />
+    
+    <!-- operation zone -->
+    <LinearLayout 
+        android:layout_width="70dp"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:background="#556677"
+        >
+        <TextView 
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:text="DELETE"
+            android:gravity="center"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+</cn.beriru.view.SlideItem>

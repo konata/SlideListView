@@ -71,12 +71,10 @@ public class SlideItem extends LinearLayout implements Slidable {
 		}
 	}
 	
-	
 	private void smoothScrollTo(int to) {
 		int from = getScrollX();
 		mScroller.startScroll(from, 0, to - from, 0);
 	}
-	
 	
 
 	@Override

@@ -1,11 +1,9 @@
 package cn.beriru.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.AbsListView;
 import android.widget.ListView;
 
 
@@ -21,19 +19,14 @@ public class SlideListView extends ListView {
 	
 	public SlideListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init();
 	}
 	
-
 	public SlideListView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		init();
 	}
 	
-	private void init() {
-	}
+	private SlideItem mCurrentItem;
 	
-	private SlideItem mCurrentTag;
 	private int mInitTagTop;
 	
 	public boolean onTouchEvent(MotionEvent e) {
@@ -43,23 +36,22 @@ public class SlideListView extends ListView {
 			int position = pointToPosition(x, y) - getFirstVisiblePosition();
 			if(position != INVALID_POSITION){
 				SlideItem newItem = (SlideItem) getChildAt(position);
-				if(mCurrentTag != null && newItem != mCurrentTag){
-					mCurrentTag.close();
+				if(mCurrentItem != null && newItem != mCurrentItem){
+					mCurrentItem.close();
 				}
 				if(newItem != null){
-					mCurrentTag = newItem;
-					mInitTagTop = mCurrentTag.getTop();
+					mCurrentItem = newItem;
+					mInitTagTop = mCurrentItem.getTop();
 				}
 			}
 		}
-		if(mCurrentTag != null){
-			int tagTop = mCurrentTag.getTop();
-			Log.d("tagTop", " " + tagTop + " result : " + (Math.abs(tagTop - mInitTagTop) > THRESHOLD));
+		if(mCurrentItem != null){
+			int tagTop = mCurrentItem.getTop();
 			if(Math.abs(tagTop - mInitTagTop) > THRESHOLD){
-				mCurrentTag.close();
-				mCurrentTag = null;
+				mCurrentItem.close();
+				mCurrentItem = null;
 			}else{
-				mCurrentTag.onPassTouchEvent(e);
+				mCurrentItem.onPassTouchEvent(e);
 			}
 		}
 		boolean superConsume =  super.onTouchEvent(e);

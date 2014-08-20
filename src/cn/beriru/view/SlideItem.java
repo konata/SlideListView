@@ -18,9 +18,9 @@ public class SlideItem extends LinearLayout {
 	
 	private Scroller mScroller;
 	
-	private View mContent; // 展示内容
+	private View mContent; // main content
 	
-	private View mHolder; // 操作
+	private View mHolder; // operation area
 
 	private int mHolderWidth = sHolderDip;
 
@@ -30,7 +30,7 @@ public class SlideItem extends LinearLayout {
 
 	private int mLastY;
 
-	private static int sHolderDip = 70; // 70dp width
+	private static int sHolderDip = 70; // fix the holder width here
 	
 	@SuppressLint("NewApi")
 	public SlideItem(Context context, AttributeSet attrs, int defStyle) {
@@ -99,7 +99,7 @@ public class SlideItem extends LinearLayout {
 				if(deltaX < deltaY * TAN){
 					break;
 				}
-				int newScrollX = scrollX + mLastX - x;  // scroll方向是移动的相反方向
+				int newScrollX = scrollX + mLastX - x;  // scroll should be the opposite direction 
 				if(deltaX != 0){
 					if(newScrollX < 0){
 						newScrollX = 0;

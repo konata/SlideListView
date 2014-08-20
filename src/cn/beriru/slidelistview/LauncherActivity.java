@@ -1,29 +1,16 @@
 package cn.beriru.slidelistview;
 
-import cn.beriru.view.SlideItem;
-import cn.beriru.view.SlideListView;
-import android.os.Bundle;
 import android.app.Activity;
-import android.util.Log;
-import android.view.Menu;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
-
-/**
- * FIXME
- * 1.做成自己inflate的xml,不用在xml里面写SlideItem的名字
- *
- */
-
-
-
+import cn.beriru.view.SlideItem;
+import cn.beriru.view.SlideListView;
 public class LauncherActivity extends Activity {
 	
 	SlideListView mList;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

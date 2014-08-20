@@ -2,15 +2,12 @@ package cn.beriru.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ListView;
 
 
 /**
  * @author Minami
- * 1.滑动事件需要关闭打开的item
- * 2.ListView自己探测滑动事件并分配给子view
  */
 
 public class SlideListView extends ListView {

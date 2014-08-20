@@ -74,6 +74,7 @@ public class SlideItem extends LinearLayout implements Slidable {
 	private void smoothScrollTo(int to) {
 		int from = getScrollX();
 		mScroller.startScroll(from, 0, to - from, 0);
+		invalidate();
 	}
 	
 
@@ -109,14 +110,12 @@ public class SlideItem extends LinearLayout implements Slidable {
 					break;
 				}
 				int newScrollX = scrollX + mLastX - x;  // scroll方向是移动的相反方向
-				Log.d("newScrollX", "newScrollX " + newScrollX + " scrollX:" + scrollX + " mLastX:" + mLastX + " x:" + x);
 				if(deltaX != 0){
 					if(newScrollX < 0){
 						newScrollX = 0;
 					}else if(newScrollX > mHolderWidth){
 						newScrollX = mHolderWidth;
 					}
-					Log.d("newScrollX", "" + newScrollX);
 					scrollTo(newScrollX, 0);
 				}
 				mLastX = x;
@@ -126,7 +125,7 @@ public class SlideItem extends LinearLayout implements Slidable {
 		case MotionEvent.ACTION_UP:
 		case MotionEvent.ACTION_CANCEL:{
 				int newScrollX = 0;
-				if(scrollX > mHolderWidth * 0.75 ){
+				if(scrollX > mHolderWidth * 0.6 ){
 					newScrollX = mHolderWidth;
 				}
 				smoothScrollTo(newScrollX);

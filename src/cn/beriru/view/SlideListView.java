@@ -1,7 +1,9 @@
 package cn.beriru.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -15,44 +17,24 @@ import android.widget.ListView;
 
 public class SlideListView extends ListView {
 	public static final String TAG = SlideListView.class.getCanonicalName();
-	protected static final float THRESHOD = 5;
+	protected static final float THRESHOLD = 20;
 	
 	public SlideListView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init();
 	}
 	
-	private void init() {
-		setOnScrollListener(new OnScrollListener() {
-			public float mScrollOffset = 0 ;
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				if(scrollState == SCROLL_STATE_IDLE){
-					mScrollOffset = getScrollY();
-				}
-				// FIXME
-				if(scrollState == SCROLL_STATE_TOUCH_SCROLL && mCurrentTag != null){
-					if(Math.abs(mScrollOffset - getScrollY()) > THRESHOD){
-						mCurrentTag.close();
-					}
-					mScrollOffset = getScrollY();
-				}
-			}
-			
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-				
-			}
-		});
-		
-	}
 
 	public SlideListView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init();
 	}
 	
-	private Slidable mCurrentTag;
+	private void init() {
+	}
+	
+	private SlideItem mCurrentTag;
+	private int mInitTagTop;
 	
 	public boolean onTouchEvent(MotionEvent e) {
 		if(e.getAction() == MotionEvent.ACTION_DOWN){
@@ -60,22 +42,27 @@ public class SlideListView extends ListView {
 			int y = (int) e.getY();
 			int position = pointToPosition(x, y) - getFirstVisiblePosition();
 			if(position != INVALID_POSITION){
-				Slidable newItem = (Slidable) getChildAt(position);
+				SlideItem newItem = (SlideItem) getChildAt(position);
 				if(mCurrentTag != null && newItem != mCurrentTag){
 					mCurrentTag.close();
 				}
-				mCurrentTag = newItem;
+				if(newItem != null){
+					mCurrentTag = newItem;
+					mInitTagTop = mCurrentTag.getTop();
+				}
 			}
 		}
 		if(mCurrentTag != null){
-			mCurrentTag.onPassTouchEvent(e);
+			int tagTop = mCurrentTag.getTop();
+			Log.d("tagTop", " " + tagTop + " result : " + (Math.abs(tagTop - mInitTagTop) > THRESHOLD));
+			if(Math.abs(tagTop - mInitTagTop) > THRESHOLD){
+				mCurrentTag.close();
+				mCurrentTag = null;
+			}else{
+				mCurrentTag.onPassTouchEvent(e);
+			}
 		}
 		boolean superConsume =  super.onTouchEvent(e);
 		return superConsume;
 	}
-	
-	
-	
-	
-	
 }
